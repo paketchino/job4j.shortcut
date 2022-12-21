@@ -16,6 +16,7 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "site")
     private String site;
 
     @Column(name = "login")
@@ -24,6 +25,7 @@ public class Site {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "registration")
     private boolean registration;
 
     @ManyToOne

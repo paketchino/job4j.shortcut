@@ -15,10 +15,11 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "url")
     private String url;
 
-    @Column(name = "unique_code")
-    private String uniqueCode;
+    @Column(name = "key_code")
+    private String key;
 
     @Column(precision = 0)
     private int count;

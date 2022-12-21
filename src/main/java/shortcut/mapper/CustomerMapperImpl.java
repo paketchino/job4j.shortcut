@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import shortcut.dto.RegistrationDTO;
 import shortcut.dto.UrlDTOConvert;
 import shortcut.dto.SiteDTORedirect;
+import shortcut.dto.UrlDTOStat;
 import shortcut.model.Site;
 import shortcut.model.Url;
 
@@ -22,7 +23,7 @@ public class CustomerMapperImpl implements CustomerMapper {
     @Override
     public UrlDTOConvert convert(Url url) {
         var convert = new UrlDTOConvert();
-        convert.setUniqueCode(url.getUniqueCode());
+        convert.setUrl(url.getUrl());
         return convert;
     }
 
@@ -31,5 +32,13 @@ public class CustomerMapperImpl implements CustomerMapper {
         var redirect = new SiteDTORedirect();
         redirect.setUrl(url.getUrl());
         return redirect;
+    }
+
+    @Override
+    public UrlDTOStat statistic(Url url) {
+        var statistic = new UrlDTOStat();
+        statistic.setUrl(url.getUrl());
+        statistic.setCount(url.getCount());
+        return statistic;
     }
 }

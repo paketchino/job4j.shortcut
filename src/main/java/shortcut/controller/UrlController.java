@@ -2,14 +2,17 @@ package shortcut.controller;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shortcut.dto.UrlDTOConvert;
-import shortcut.dto.SiteDTORedirect;
+import shortcut.dto.UrlDTOStat;
 import shortcut.mapper.CustomerMapperImpl;
 import shortcut.model.Url;
 import shortcut.service.UrlService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -22,16 +25,26 @@ public class UrlController {
 
     @PostMapping("/convert")
     public ResponseEntity<UrlDTOConvert> convert(@RequestBody Url url) {
-        url.setUniqueCode(RandomStringUtils.randomAscii(6));
+        url.setKey(RandomStringUtils.randomAscii(6));
         urlService.save(url);
         var convert = customerMapper.convert(url);
         return new ResponseEntity<>(convert, HttpStatus.OK);
     }
 
     @GetMapping("/redirect/{code}")
-    public ResponseEntity<SiteDTORedirect> redirect(@PathVariable(name = "code") String code) {
+    public ResponseEntity<String> redirect(@PathVariable String code) {
+        HttpHeaders httpHeaders = new HttpHeaders();
         var url = urlService.findByUniqueCode(code);
-        var redirect= customerMapper.redirect(url);
-        return new ResponseEntity<>(redirect, HttpStatus.FOUND);
+        UrlDTOConvert convert = customerMapper.convert(url);
+        httpHeaders.set("REDIRECT URL - ", convert.getUrl());
+        urlService.updateCount(url.getCount(), url.getId());
+        var httpStatus = HttpStatus.valueOf("HTTP CODE - " + HttpStatus.FOUND);
+        return new ResponseEntity<String>(httpHeaders, httpStatus);
+    }
+
+    @GetMapping("/statistic")
+    public ResponseEntity<List<UrlDTOStat>> statistic() {
+        List<UrlDTOStat> findAll = urlService.allStatistic();
+        return new ResponseEntity<>(findAll, HttpStatus.FOUND);
     }
 }
