@@ -31,10 +31,10 @@ public class UrlController {
         return new ResponseEntity<>(convert, HttpStatus.OK);
     }
 
-    @GetMapping("/redirect/{code}")
-    public ResponseEntity<String> redirect(@PathVariable String code) {
+    @GetMapping("/redirect/{key}")
+    public ResponseEntity<String> redirect(@PathVariable(name = "key") String key) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        var url = urlService.findByUniqueCode(code);
+        var url = urlService.findByUniqueCode(key);
         UrlDTOConvert convert = customerMapper.convert(url);
         httpHeaders.set("REDIRECT URL - ", convert.getUrl());
         urlService.updateCount(url.getCount(), url.getId());
