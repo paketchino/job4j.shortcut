@@ -16,6 +16,7 @@ public class SiteService {
     public Site save(Site site) {
         return siteRepository.save(site);
     }
+
     public Optional<Site> findByLogin(String login) {
         return siteRepository.findByLogin(login);
     }

@@ -26,7 +26,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private NoOpPasswordEncoder noOpPasswordEncoder;
 
-    public WebSecurity(UserDetailsServiceImpl userDetailsService, NoOpPasswordEncoder noOpPasswordEncoder) {
+    public WebSecurity(UserDetailsServiceImpl userDetailsService,
+                       NoOpPasswordEncoder noOpPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.noOpPasswordEncoder = noOpPasswordEncoder;
     }
