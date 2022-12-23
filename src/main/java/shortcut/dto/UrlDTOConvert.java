@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class UrlDTOConvert {
 
-    private String url;
+    private String key;
 
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -15,24 +16,25 @@ import shortcut.jwt.JWTAuthenticationFilter;
 import shortcut.jwt.JWTAuthorizationFilter;
 import shortcut.service.UserDetailsServiceImpl;
 
-import static shortcut.jwt.JWTAuthenticationFilter.SIGN_UP_URL;
+import static shortcut.jwt.JWTAuthenticationFilter.REDIRECT;
+import static shortcut.jwt.JWTAuthenticationFilter.REGISTRATION;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    private PasswordEncoder passwordEncoder;
+    private NoOpPasswordEncoder noOpPasswordEncoder;
 
-    public WebSecurity(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
+    public WebSecurity(UserDetailsServiceImpl userDetailsService, NoOpPasswordEncoder noOpPasswordEncoder) {
         this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
+        this.noOpPasswordEncoder = noOpPasswordEncoder;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, REGISTRATION, REDIRECT).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
@@ -42,7 +44,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(noOpPasswordEncoder);
     }
 
     @Bean

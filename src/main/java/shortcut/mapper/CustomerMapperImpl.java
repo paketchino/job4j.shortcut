@@ -1,10 +1,7 @@
 package shortcut.mapper;
 
 import org.springframework.stereotype.Component;
-import shortcut.dto.RegistrationDTO;
-import shortcut.dto.UrlDTOConvert;
-import shortcut.dto.SiteDTORedirect;
-import shortcut.dto.UrlDTOStat;
+import shortcut.dto.*;
 import shortcut.model.Site;
 import shortcut.model.Url;
 
@@ -23,13 +20,13 @@ public class CustomerMapperImpl implements CustomerMapper {
     @Override
     public UrlDTOConvert convert(Url url) {
         var convert = new UrlDTOConvert();
-        convert.setUrl(url.getUrl());
+        convert.setKey(url.getKey());
         return convert;
     }
 
     @Override
-    public SiteDTORedirect redirect(Url url) {
-        var redirect = new SiteDTORedirect();
+    public UrlDTORedirect redirect(Url url) {
+        var redirect = new UrlDTORedirect();
         redirect.setUrl(url.getUrl());
         return redirect;
     }

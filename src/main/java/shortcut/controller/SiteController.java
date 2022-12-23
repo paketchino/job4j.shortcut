@@ -21,8 +21,8 @@ public class SiteController {
 
     @PostMapping("/registration")
     public ResponseEntity<RegistrationDTO> signUp(@RequestBody Site site) {
-        site.setLogin(RandomStringUtils.randomAscii(8));
-        site.setPassword(RandomStringUtils.randomAscii(8));
+        site.setLogin(RandomStringUtils.randomAlphanumeric(8));
+        site.setPassword(RandomStringUtils.randomAlphanumeric(8));
         site.setRegistration(true);
         siteService.save(site);
         return new ResponseEntity<>(customerMapper.registrationDTO(site), HttpStatus.CREATED);

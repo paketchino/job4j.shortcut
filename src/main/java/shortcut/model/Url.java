@@ -3,6 +3,7 @@ package shortcut.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 @Entity(name = "urls")
@@ -15,10 +16,11 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "url")
+    @Column(name = "url", unique = true)
+    @NonNull
     private String url;
 
-    @Column(name = "key_code")
+    @Column(name = "key_code", unique = true)
     private String key;
 
     @Column(precision = 0)

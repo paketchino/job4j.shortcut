@@ -3,6 +3,5 @@ create table if not exists sites (
     site text,
     login text,
     password text,
-    registration boolean,
-    url_id int references sites(id)
+    registration boolean
 );

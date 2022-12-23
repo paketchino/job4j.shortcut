@@ -1,9 +1,6 @@
 package shortcut.mapper;
 
-import shortcut.dto.RegistrationDTO;
-import shortcut.dto.UrlDTOConvert;
-import shortcut.dto.SiteDTORedirect;
-import shortcut.dto.UrlDTOStat;
+import shortcut.dto.*;
 import shortcut.model.Site;
 import shortcut.model.Url;
 
@@ -13,7 +10,7 @@ public interface CustomerMapper {
 
     UrlDTOConvert convert(Url url);
 
-    SiteDTORedirect redirect(Url url);
+    UrlDTORedirect redirect(Url url);
 
     UrlDTOStat statistic(Url url);
 

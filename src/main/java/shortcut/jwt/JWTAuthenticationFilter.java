@@ -8,8 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import shortcut.model.Person;
-
+import shortcut.model.Site;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public static final long EXPIRATION_TIME = 864_000_000; /* 10 days */
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final String SIGN_UP_URL = "/sign-up";
+    public static final String REGISTRATION = "/registration";
+
+    public static final String REDIRECT = "/redirect";
 
     private final AuthenticationManager auth;
 
@@ -38,8 +39,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {
         try {
-            Person creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), Person.class);
+            Site creds = new ObjectMapper()
+                    .readValue(req.getInputStream(), Site.class);
 
             return auth.authenticate(
                     new UsernamePasswordAuthenticationToken(

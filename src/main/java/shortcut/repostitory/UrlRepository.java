@@ -14,11 +14,11 @@ import java.util.Optional;
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Long> {
 
-    @Query("from urls as u where u.key =: key")
-    Url findByKey(@Param("key_code") String key);
+    @Query("select u from urls as u where u.key =:key_code")
+    Optional<Url> findByKey(@Param("key_code") String key);
 
     @Transactional
-    @Query("update urls as u set u.count =: count + 1 where u.id =: id")
+    @Query("update urls as u set u.count =:count + 1 where u.id =:id")
     @Modifying
     Url updateCount(@Param("count") int count, @Param("id") Long id);
 

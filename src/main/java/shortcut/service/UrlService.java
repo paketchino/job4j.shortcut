@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shortcut.dto.UrlDTOStat;
 import shortcut.mapper.CustomerMapperImpl;
+import shortcut.model.Site;
 import shortcut.model.Url;
 import shortcut.repostitory.UrlRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,15 +27,12 @@ public class UrlService {
         urlRepository.save(url);
     }
 
-    public Url findByUniqueCode(String code) {
-        Url url = urlRepository.findByKey(code);
-        if (url == null) {
-            log.error("Содержимое ключа не найдено");
-        }
-        return url;
+    public Optional<Url> findByUniqueCode(String code) {
+        return urlRepository.findByKey(code);
     }
 
     public Url updateCount(int count, Long id) {
+        log.info("Обновление счетчика произошло успешно");
         return urlRepository.updateCount(count, id);
     }
 
@@ -46,9 +43,7 @@ public class UrlService {
                 .collect(Collectors.toList());
     }
 
-    Optional<Url> findById(Long aLong) {
+    public Optional<Url> findById(Long aLong) {
         return urlRepository.findById(aLong);
     }
-
-
 }

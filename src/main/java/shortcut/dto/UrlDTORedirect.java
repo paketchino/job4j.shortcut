@@ -3,7 +3,7 @@ package shortcut.dto;
 import lombok.Data;
 
 @Data
-public class SiteDTORedirect {
+public class UrlDTORedirect {
 
     private String url;
 }

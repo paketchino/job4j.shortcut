@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import shortcut.model.Site;
 import shortcut.repostitory.SiteRepository;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class SiteService {
@@ -13,5 +15,8 @@ public class SiteService {
 
     public Site save(Site site) {
         return siteRepository.save(site);
+    }
+    public Optional<Site> findByLogin(String login) {
+        return siteRepository.findByLogin(login);
     }
 }

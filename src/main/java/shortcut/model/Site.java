@@ -3,6 +3,7 @@ package shortcut.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 
@@ -16,19 +17,17 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "site")
+    @Column(name = "site", unique = true)
+    @NonNull
     private String site;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", unique = true)
     private String password;
 
     @Column(name = "registration")
     private boolean registration;
 
-    @ManyToOne
-    @JoinColumn(name = "url_id")
-    private Url url;
 }
